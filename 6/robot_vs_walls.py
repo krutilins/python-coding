@@ -5,51 +5,55 @@ WALL = 1
 ADVENTURER = 2
 GOAL = 3
 
+class Adventurer:
+  def jump(self):
+    self.y += 1
+  def move_forward(self):
+    self.x += 1
+  def climb_up(self):
+    self.jump()
+    self.move_forward()
+  def __init__(self, x, y):
+    self.x = x
+    self.y = y
+
+class World:
+  def print_world(matrix):
+    print(matrix)
+    for row in matrix:
+      row_string = ""
+      for item in row:
+        row_string += str(item)
+      print(f"{row_string}")  
+
+  def generate_ground_with_walls(length):
+    new_ground = []
+    for i in range(length):
+      if random_boolean():
+        new_ground[i] = WALL
+      else:
+        new_ground[i] = NOT_WALL
+    return(new_ground)
+
+  def generate_sky(length):
+    sky_path = []
+    for i in range(length):
+      sky_path.append(NOT_WALL)
+    return(sky_path)
+
+  def __init__(self,width,height):
+    return([
+      self.generate_sky(height - 1), 
+      self.generate_ground_with_walls(width)
+    ])
+
 def random_boolean():
   return(bool(random.getrandbits(1)))
 
-def generate_ground_with_walls(length):
-  new_ground = []
-  for i in range(length):
-    if random_boolean():
-      new_ground[i] = WALL
-    else:
-      new_ground[i] = NOT_WALL
-  return(new_ground)
-
-def generate_sky(length):
-  sky_path = []
-  for i in range(length):
-    sky_path.append(NOT_WALL)
-  return(sky_path)
-
-def generate_world(world_length):
-  return([
-    generate_sky(world_length), 
-    generate_ground_with_walls(world_length)
-  ])
-
 def place_adventurer_and_goal(world):
-  world[0] = ADVENTURER
-  world[len(world) - 1] = GOAL
+  return(Adventurer(0, 0))
 
-def print_world(matrix):
-  print(matrix)
-  for row in matrix:
-    row_string = ""
-    for item in row:
-      row_string += str(item)
-    print(f"{row_string}")  
 
-def climb_up(x, y):
-  x += 1
-  y += 1
-
-def move_forward(x, y):
-  x += 1
-
-def jump(x, y):
-  y += 1
 
 def can_adventurer_move_forward(world, x, y):
   if y == 0:
@@ -57,16 +61,15 @@ def can_adventurer_move_forward(world, x, y):
   else:
     return world[1][x + 1] == NOT_WALL
 
+world_width = int(input("Type width of your world. It should be at least three: "))
+world_hight = int(input("Type hight of your world. It should be at least two: "))
 
-length_of_path = int(input("Type length of your path. It should be at least three: "))
 
-if length_of_path >= 3:
-  new_world = generate_world(length_of_path)
-  print_world(new_world)
+if world_width >= 3 and world_hight >= 2:
+  new_world = World(world_width, world_hight)
   place_adventurer_and_goal(new_world)
 
-  
-  
+
 else:
   print("Length should be at least three")
 
