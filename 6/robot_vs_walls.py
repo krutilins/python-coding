@@ -5,6 +5,14 @@ WALL = 1
 ADVENTURER = 2
 GOAL = 3
 
+class Utils:
+  def fillArrayBy(array, length, fill):
+    for i in range(length):
+      array[i] = fill
+  def random_boolean():
+    return(bool(random.getrandbits(1)))
+
+
 class Adventurer:
   def jump(self):
     self.y += 1
@@ -18,42 +26,26 @@ class Adventurer:
     self.y = y
 
 class World:
-  def print_world(matrix):
-    print(matrix)
-    for row in matrix:
+  def show(self):
+    for row in self.matrix:
       row_string = ""
       for item in row:
         row_string += str(item)
-      print(f"{row_string}")  
+      print(f"{row_string}")
+  def __generate_walls(self):
+    last_row_index = len(self.matrix) - 1
+    last_row_length = len(self.matrix[last_row_index])
+    for i in range(2, last_row_length - 1):
+      if (Utils.random_boolean()):
+        self.matrix[last_row_index][i] = WALL
 
-  def generate_ground_with_walls(length):
-    new_ground = []
-    for i in range(length):
-      if random_boolean():
-        new_ground[i] = WALL
-      else:
-        new_ground[i] = NOT_WALL
-    return(new_ground)
+  def __init__(self, width, height):
+    self.matrix = [[0] * width for i in range(height)]
+    self.__generate_walls()
 
-  def generate_sky(length):
-    sky_path = []
-    for i in range(length):
-      sky_path.append(NOT_WALL)
-    return(sky_path)
-
-  def __init__(self,width,height):
-    return([
-      self.generate_sky(height - 1), 
-      self.generate_ground_with_walls(width)
-    ])
-
-def random_boolean():
-  return(bool(random.getrandbits(1)))
 
 def place_adventurer_and_goal(world):
   return(Adventurer(0, 0))
-
-
 
 def can_adventurer_move_forward(world, x, y):
   if y == 0:
@@ -64,12 +56,9 @@ def can_adventurer_move_forward(world, x, y):
 world_width = int(input("Type width of your world. It should be at least three: "))
 world_hight = int(input("Type hight of your world. It should be at least two: "))
 
-
 if world_width >= 3 and world_hight >= 2:
   new_world = World(world_width, world_hight)
-  place_adventurer_and_goal(new_world)
-
-
+  new_world.show()
 else:
   print("Length should be at least three")
 
