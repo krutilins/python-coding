@@ -12,19 +12,6 @@ class Utils:
   def random_boolean():
     return(bool(random.getrandbits(1)))
 
-
-class Adventurer:
-  def jump(self):
-    self.y += 1
-  def move_forward(self):
-    self.x += 1
-  def climb_up(self):
-    self.jump()
-    self.move_forward()
-  def __init__(self, x, y):
-    self.x = x
-    self.y = y
-
 class World:
   def show(self):
     for row in self.matrix:
@@ -44,20 +31,11 @@ class World:
     self.__generate_walls()
 
 
-def place_adventurer_and_goal(world):
-  return(Adventurer(0, 0))
-
-def can_adventurer_move_forward(world, x, y):
-  if y == 0:
-    return world[1][x + 1] == WALL
-  else:
-    return world[1][x + 1] == NOT_WALL
-
 world_width = int(input("Type width of your world. It should be at least three: "))
-world_hight = int(input("Type hight of your world. It should be at least two: "))
+world_height = int(input("Type hight of your world. It should be at least two: "))
 
-if world_width >= 3 and world_hight >= 2:
-  new_world = World(world_width, world_hight)
+if world_width >= 3 and world_height >= 2:
+  new_world = World(world_width, world_height)
   new_world.show()
 else:
   print("Length should be at least three")
