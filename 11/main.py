@@ -37,9 +37,24 @@ def count_score(cards):
     result += i
   return result
 
+def get_final_result(user_cards, computer_cards):
+  user_score = count_score(user_cards)
+  computer_score = count_score(computer_cards)
+
+  print(f"Your final hand: {show_cards(user_cards, False)}, current score: {user_score}")
+  print(f"Computer's final hand: {show_cards(computer_cards, False)}, current score: {computer_score}")
+    
+  if user_score > computer_score:
+    return("You win!")
+  elif user_score == computer_score:
+    return("Draw")
+  else:
+    return("You lose :(")
+
+
 def askUserYesOrNo(question: str, yes = "yes", no = "no"):
   while True:
-    user_desire_to_continue = input(f"{question} ({yes}) or ({no})")
+    user_desire_to_continue = input(f"{question} ({yes}) or ({no}): ")
     if user_desire_to_continue == yes:
       return True
     elif user_desire_to_continue == no:
@@ -52,29 +67,26 @@ print(art.logo)
 user_wants_to_play = askUserYesOrNo("Do you want to play a game of Blackjack?")
 
 while user_wants_to_play:
-    user_cards = random.choices(cards, k=6)
-    computer_cards = random.choices(cards, k=4)
+    user_cards = random.choices(cards)
+    computer_cards = random.choices(cards, k=2)
 
-    print(f"Your cards: {show_cards(user_cards, False)}, current score: {count_score(user_cards)}")
-    print(f"Computer cards: {show_cards(computer_cards, True)}")
-
-    user_wants_to_get_another_card = askUserYesOrNo("Do you want to get another card?")
-    if (user_wants_to_get_another_card):
+    user_wants_to_get_another_card = True
+    while user_wants_to_get_another_card:
       user_cards.append(random.choice(cards))
-    if count_score(computer_cards) < 17:
+      print(f"Your cards: {show_cards(user_cards, False)}, current score: {count_score(user_cards)}")
+      print(f"Computer's cards: {show_cards(computer_cards, True)}")
+      if count_score(computer_cards) < 17:
+        computer_cards.append(random.choice(cards))
+      user_wants_to_get_another_card = askUserYesOrNo("Do you want to get another card?")
+
+    while count_score(computer_cards) < 17:
       computer_cards.append(random.choice(cards)) 
 
-    print(f"Your final hand: {show_cards(user_cards, False)}, current score: {count_score(user_cards)}")
-    print(f"Computer's final hand: {show_cards(computer_cards, False)}, current score: {count_score(computer_cards)}")
+    print(get_final_result(user_cards, computer_cards))
+
+    user_wants_to_play = askUserYesOrNo("Do you want to play again?")
     
-    if count_score(user_cards) > count_score(computer_cards):
-      print("You win!")
-    elif count_score(user_cards) == count_score(computer_cards):
-      print("Draw")
-    else:
-      print("You lose :(")
-    
-print("See you later!")
+print("That's sad :( See you later!")
 
 
 #Hint 1: Go to this website and try out the Blackjack game: 
