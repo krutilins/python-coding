@@ -1,6 +1,3 @@
-from typing import List
-
-
 bid_log = {}
 
 def add_bid(name: str, bid: int):
