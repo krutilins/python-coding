@@ -1,4 +1,12 @@
-data = [
+from typing import List
+
+class Footballer:
+  name: str
+  follower_count: int
+  description: str
+  country: str
+  
+data: List[Footballer] = [
     {
         'name': 'Instagram',
         'follower_count': 346,

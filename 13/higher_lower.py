@@ -1,6 +1,7 @@
-from ssl import Options
+import random
 from typing import List
 from art import logo
+from game_data import data as footbalers
 
 def chooseBetweenOptions(question: str, options: List[str]):
   comma_separeted_options = ', '.join(options) 
@@ -21,9 +22,24 @@ def askUserYesOrNo(question: str, yes = "yes", no = "no"):
     else:
       print("Unknown operation. Try again!")
 
+def transformTo(first, second):
+  return(
+    {
+
+    }
+  )
 
 print(logo)
 
-chooseBetweenOptions("What do you prefer?", ['cake', 'milk', 'coffee', 'die'])
 
-print("Compare A: ")
+[first_footballer_to_compare, second_footballer_to_compare] = random.choices(footbalers, k=2)
+
+print(f"Compare A: {first_footballer_to_compare}")
+print(f"Compare B: {second_footballer_to_compare}")
+
+{
+  "A": first_footballer_to_compare.follower_count >
+}
+
+
+chooseBetweenOptions("Who has more followers", ["A", "B"])
