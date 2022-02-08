@@ -22,24 +22,26 @@ def askUserYesOrNo(question: str, yes = "yes", no = "no"):
     else:
       print("Unknown operation. Try again!")
 
-def transformTo(first, second):
-  return(
-    {
-
-    }
-  )
+score = 0
 
 print(logo)
+while True:
+  [first_person_to_compare, second_person_to_compare] = random.choices(footbalers, k=2)
 
+  print(f"Compare A: {first_person_to_compare['name']} - {first_person_to_compare['description']} - {second_person_to_compare['country']}")
+  print(f"Compare B: {second_person_to_compare['name']} - {second_person_to_compare['description']} - {second_person_to_compare['country']}")
 
-[first_footballer_to_compare, second_footballer_to_compare] = random.choices(footbalers, k=2)
+  if first_person_to_compare['follower_count'] > second_person_to_compare['follower_count']:
+    answer_score_hash = {
+      "A": 1,
+      "B": -1
+    }
+  else:
+    answer_score_hash = {
+      "A": -1,
+      "B": 1
+    }
 
-print(f"Compare A: {first_footballer_to_compare}")
-print(f"Compare B: {second_footballer_to_compare}")
+  score += answer_score_hash[chooseBetweenOptions("Who has more followers", ["A", "B"])]
 
-{
-  "A": first_footballer_to_compare.follower_count >
-}
-
-
-chooseBetweenOptions("Who has more followers", ["A", "B"])
+  print(f"Your current score: {score}")
